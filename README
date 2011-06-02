@@ -1,0 +1,112 @@
+3M Microtouch EX II serial touchscreen setup tool(s).
+
+This is a tool for setup the EX II serial touchscreen
+controller as it is described in the reference guide.
+Look for the EXII_Serial-Cntrls_RefGuide.pdf
+on the multimedia.3m.com site.
+
+3M isn't responsible for supporting the tool
+as it's written in the Crystal Service company.
+If you have any questions, please contact the author.
+
+All the programs in the project are licensed under
+the terms of the GNU GPL license, see COPYING file.
+
+Special exception is made for the Crystal Service company
+that may use, modify and distribute the program under
+the terms of the BSD license.
+
+Usage: exii-tool <device> <command>
+Commands are:
+ Z	- null command
+ NM	- get controller's name
+ OI	- get controller's identifier
+ UV	- get controller's features
+ R	- reset
+ RD	- restore defaults
+ CX	- extended (interactive) calibration
+ CR	- collect raw coordinates
+ FR	- raw format
+ FT	- tablet format (preferred)
+ MS	- stream mode
+ Ppdsb	- set communication parameters (see manual)
+ XY	- (emulated) wait for screen touch and report x,y coordinates
+
+Examples.
+
+$ ./exii-tool /dev/ttyS0 Z
+9600 baud connection detected
+0
+
+$ ./exii-tool /dev/ttyS0 NM
+9600 baud connection detected
+Wincor EXII-1050SC-02 v3.1
+
+$ ./exii-tool /dev/ttyS0 OI
+9600 baud connection detected
+A31011
+
+$ ./exii-tool /dev/ttyS0 UV
+9600 baud connection detected
+QMV***00
+(see EX II reference guide for description)
+
+$ ./exii-tool /dev/ttyS0 R
+9600 baud connection detected
+0
+
+$ ./exii-tool /dev/ttyS0 RD
+9600 baud connection detected
+$ ./exii-tool /dev/ttyS0 Z
+2400 baud connection detected
+0
+
+$ ./exii-tool /dev/ttyS0 CX
+2400 baud connection detected
+0
+(touch the screen twice)
+1
+1
+
+$ ./exii-tool /dev/ttyS0 CR
+2400 baud connection detected
+0
+$ ./exii-tool /dev/ttyS0 XY
+2400 baud connection detected
+(touch the center of the screen)
+FT 16024 293
+CR -45 36
+
+$ ./exii-tool /dev/ttyS0 FR
+2400 baud connection detected
+0
+(to reset the controller and thus break the FR mode)
+$ echo '.R;' | ./ttyecho /dev/ttyS0 2400 8N1
+^C
+$ ./exii-tool /dev/ttyS0 Z
+2400 baud connection detected
+0
+
+$ ./exii-tool /dev/ttyS0 FT
+2400 baud connection detected
+0
+$ ./exii-tool /dev/ttyS0 XY
+2400 baud connection detected
+(touch the center of the screen)
+FT 7031 7271
+CR 878 908
+
+$ ./exii-tool /dev/ttyS0 PN812
+2400 baud connection detected
+$ ./exii-tool /dev/ttyS0 Z
+9600 baud connection detected
+0
+
+
+The CX command is internally used by the exii-calibrator.
+Start the program in graphic mode and push two aims for
+1-2 seconds each.
+
+After that test calibration with the exii-drawer program:
+touch the screen randomly or pull the finger from side to side.
+Press Esc to exit.
