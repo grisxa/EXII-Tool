@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
 			perror("dup2");
 			return -1;
 		}
-		if (execl("exii-tool", "exii-tool", argv[1], "CX", NULL) < 0)
+		if (execlp("exii-tool", "exii-tool", argv[1], "CX", NULL) < 0)
 			perror("execl");
 	}
 	return 0;
